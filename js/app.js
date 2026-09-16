@@ -16,7 +16,32 @@ const $$ = (selector, parent = document) =>
 STORAGE
 ========================================================= */
 
-const STORAGE_KEY = "career-command-center-v3";
+const STORAGE_KEY = "career-command-center-v4";
+
+/* Any keys this app (or an earlier build of it) has ever written.
+   Bumping STORAGE_KEY above and purging these on load means every
+   browser — including ones with old test/demo data already saved —
+   starts clean and goes through onboarding again, without anyone
+   having to manually clear their browser storage. Add old keys
+   here if the storage key is ever bumped again in future. */
+const LEGACY_STORAGE_KEYS = [
+    "career-command-center",
+    "career-command-center-v1",
+    "career-command-center-v2",
+    "career-command-center-v3"
+];
+
+function purgeLegacyStorage() {
+
+    LEGACY_STORAGE_KEYS.forEach(key => {
+
+        try {
+            localStorage.removeItem(key);
+        } catch {
+            /* storage unavailable — nothing to purge */
+        }
+    });
+}
 
 const defaultState = {
 onboarded: false,
@@ -60,6 +85,8 @@ notifications: [
 ]
 
 };
+
+purgeLegacyStorage();
 
 let state = loadState();
 
@@ -3611,30 +3638,30 @@ $("#resetData")
 
         const confirmed =
             confirm(
-                "Reset the entire Career Command Center workspace?"
+                "Reset the entire Career Command Center workspace? " +
+                "This clears your profile, applications, interviews, " +
+                "skills and offers on this device. This can't be undone."
             );
 
         if (!confirmed) return;
 
+        /* Clear the active key plus every legacy key, so nothing
+           this app has ever written under any past version can
+           resurface later — then do a full reload rather than
+           patching state in place. A reload guarantees every
+           module re-initializes against a genuinely empty
+           localStorage instead of trusting in-memory state to
+           match it, which is what onboarding, the theme, the
+           gooey nav and every render function expect on first
+           load. */
+
         localStorage.removeItem(STORAGE_KEY);
 
-        state =
-            JSON.parse(
-                JSON.stringify(defaultState)
-            );
+        purgeLegacyStorage();
 
-        onboardingStep = 0;
+        showToast("Workspace reset. Reloading\u2026");
 
-        $("#onboarding")
-            .classList.remove("hidden");
-
-        renderOnboarding();
-
-        updateProfileUI();
-
-        setPage("dashboard");
-
-        showToast("Workspace reset.");
+        setTimeout(() => window.location.reload(), 500);
     });
 
 }
