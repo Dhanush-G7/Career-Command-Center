@@ -2290,20 +2290,32 @@ canvas {
   min-width: 0;
 }
 
-/* --- Sidebar drawer backdrop --- */
+/* --- Sidebar drawer backdrop ---
+   Deliberately never uses display:none/block to toggle visibility.
+   A later @media block used to set `display: block` unconditionally
+   on mobile widths, which overrode this rule's `display: none` and
+   left a full-viewport layer catching every tap on every button,
+   at all times, whether the drawer was open or not — the "buttons
+   don't work on mobile" bug. visibility + opacity + pointer-events
+   together are the safe way to fade this in and out: there is no
+   single property a later rule can flip to silently re-enable it. */
 .sidebar-backdrop {
   position: fixed;
   inset: 0;
   z-index: 90;
-  display: none;
+  visibility: hidden;
   opacity: 0;
+  pointer-events: none;
   background: var(--overlay);
   backdrop-filter: blur(3px);
-  transition: opacity .28s ease;
+  transition: opacity .28s ease, visibility 0s linear .28s;
 }
 
 .sidebar-backdrop.visible {
+  visibility: visible;
   opacity: 1;
+  pointer-events: auto;
+  transition: opacity .28s ease, visibility 0s linear 0s;
 }
 
 /* --- Grids become intrinsically responsive --- */
@@ -2436,10 +2448,6 @@ td:first-child {
   .sidebar.open {
     transform: translateX(0);
     box-shadow: var(--shadow);
-  }
-
-  .sidebar-backdrop {
-    display: block;
   }
 
   .main {
