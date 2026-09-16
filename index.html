@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+
+<html lang="en" data-theme="midnight">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#080a0f">
+
+<meta
+    name="description"
+    content="Career Command Center — Your entire job search. One intelligent workspace."
+>
+
+<title>Career Command Center</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+>
+
+<link rel="stylesheet" href="./css/styles.css">
+
+</head>
+
+<body>
+
+<div id="app" class="app">
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+
+    <div class="brand">
+        <div class="brand-mark">CC</div>
+
+        <div>
+            <strong>Career</strong>
+            <span>Command Center</span>
+        </div>
+    </div>
+
+    <div class="sidebar-label">WORKSPACE</div>
+
+    <nav class="sidebar-nav" id="sidebarNav">
+
+        <button class="nav-item active" data-page="dashboard">
+            <span>⌂</span>
+            <b>Dashboard</b>
+        </button>
+
+        <button class="nav-item" data-page="analyzer">
+            <span>⌕</span>
+            <b>Job Analyzer</b>
+        </button>
+
+        <button class="nav-item" data-page="applications">
+            <span>▣</span>
+            <b>Applications</b>
+            <em id="applicationCount">0</em>
+        </button>
+
+        <button class="nav-item" data-page="interviews">
+            <span>◷</span>
+            <b>Interviews</b>
+        </button>
+
+        <button class="nav-item" data-page="skills">
+            <span>◆</span>
+            <b>Skills</b>
+        </button>
+
+        <button class="nav-item" data-page="career">
+            <span>↗</span>
+            <b>Career Plan</b>
+        </button>
+
+        <button class="nav-item" data-page="offers">
+            <span>◇</span>
+            <b>Offers</b>
+        </button>
+
+        <button class="nav-item" data-page="analytics">
+            <span>◒</span>
+            <b>Analytics</b>
+        </button>
+
+        <button class="nav-item" data-page="assistant">
+            <span>✦</span>
+            <b>Assistant</b>
+        </button>
+
+    </nav>
+
+    <div class="sidebar-spacer"></div>
+
+    <div class="sidebar-label">SYSTEM</div>
+
+    <button class="nav-item" data-page="settings">
+        <span>⚙</span>
+        <b>Settings</b>
+    </button>
+
+    <div class="readiness-box">
+        <div class="readiness-top">
+            <span>Career readiness</span>
+            <strong id="readinessValue">0%</strong>
+        </div>
+
+        <div class="progress">
+            <span id="readinessProgress"></span>
+        </div>
+
+        <small>Complete your profile to improve your score.</small>
+    </div>
+
+    <button class="sidebar-user" id="sidebarUser">
+        <div class="avatar" id="sidebarAvatar">D</div>
+
+        <div>
+            <strong id="sidebarName">Candidate</strong>
+            <span id="sidebarRole">Set your target role</span>
+        </div>
+    </button>
+
+</aside>
+
+
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+
+<!-- MAIN -->
+<div class="main">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+
+        <button class="mobile-menu" id="mobileMenu">
+            ☰
+        </button>
+
+        <div class="breadcrumb">
+            <span>Career Command Center</span>
+            <i>/</i>
+            <strong id="breadcrumb">Dashboard</strong>
+        </div>
+
+        <div class="top-actions">
+
+            <button class="icon-btn" id="searchBtn" title="Search">
+                ⌕
+            </button>
+
+            <button class="icon-btn" id="notificationBtn" title="Notifications">
+                ♢
+                <span class="notification-dot" id="notificationDot"></span>
+            </button>
+
+            <div class="theme-wrap">
+
+                <button class="icon-btn" id="themeBtn" title="Change theme" aria-haspopup="true" aria-expanded="false">
+                    ◐
+                </button>
+
+                <div class="theme-menu hidden" id="themeMenu" role="menu"></div>
+
+            </div>
+
+            <button class="profile-btn" id="profileBtn">
+                <span class="avatar small" id="topAvatar">D</span>
+                <span id="topName">Candidate</span>
+                <span>⌄</span>
+            </button>
+
+        </div>
+
+    </header>
+
+
+    <!-- CONTENT -->
+    <main id="pageContainer" class="content"></main>
+
+</div>
+
+
+<!-- MOBILE NAV -->
+<nav class="mobile-nav">
+
+    <button data-page="dashboard" class="active">
+        <span>⌂</span>
+        Home
+    </button>
+
+    <button data-page="analyzer">
+        <span>⌕</span>
+        Analyze
+    </button>
+
+    <button data-page="applications">
+        <span>▣</span>
+        Jobs
+    </button>
+
+    <button data-page="interviews">
+        <span>◷</span>
+        Interviews
+    </button>
+
+    <button id="mobileMore">
+        <span>•••</span>
+        More
+    </button>
+
+</nav>
+
+</div>
+
+<!-- ONBOARDING -->
+
+<div class="overlay" id="onboarding">
+
+<div class="onboarding-card">
+
+    <div class="onboarding-logo">
+        <div class="brand-mark large">CC</div>
+
+        <strong>Career Command Center</strong>
+    </div>
+
+    <div class="onboarding-progress">
+        <span id="stepProgress"></span>
+    </div>
+
+    <div class="step-text" id="stepText">
+        Step 1 of 4
+    </div>
+
+    <div id="onboardingContent"></div>
+
+    <div class="onboarding-actions">
+
+        <button class="btn secondary" id="backStep">
+            Back
+        </button>
+
+        <button class="btn primary" id="nextStep">
+            Continue →
+        </button>
+
+    </div>
+
+</div>
+
+</div>
+
+<!-- MODAL -->
+
+<div class="modal-overlay hidden" id="modalOverlay">
+
+<div class="modal" id="modal"></div>
+
+</div>
+
+<!-- SEARCH -->
+
+<div class="search-overlay hidden" id="searchOverlay">
+
+<div class="search-box">
+
+    <div class="search-header">
+        <span>⌕</span>
+
+        <input
+            type="search"
+            id="globalSearch"
+            placeholder="Search Career Command Center..."
+            autocomplete="off"
+        >
+
+        <kbd>ESC</kbd>
+    </div>
+
+    <div id="searchResults"></div>
+
+</div>
+
+</div>
+
+<!-- COMMAND PALETTE -->
+
+<div class="command-overlay hidden" id="commandOverlay">
+
+<div class="command-box">
+
+    <div class="command-input">
+        <span>⌕</span>
+
+        <input
+            id="commandInput"
+            placeholder="Type a command..."
+            autocomplete="off"
+        >
+
+        <kbd>ESC</kbd>
+    </div>
+
+    <div id="commandResults"></div>
+
+    <div class="command-footer">
+        <span>↑↓ Navigate</span>
+        <span>↵ Select</span>
+        <span>ESC Close</span>
+    </div>
+
+</div>
+
+</div>
+
+<!-- NOTIFICATIONS -->
+
+<div class="notification-panel hidden" id="notificationPanel">
+
+<div class="panel-head">
+
+    <div>
+        <strong>Notifications</strong>
+        <span id="notificationCount">0 updates</span>
+    </div>
+
+    <button id="closeNotifications">×</button>
+
+</div>
+
+<div id="notificationList"></div>
+
+</div>
+
+<!-- TOAST -->
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="./js/app.js" defer></script>
+
+</body>
+</html>
